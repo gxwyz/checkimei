@@ -30,8 +30,23 @@ with open('testimei.txt', 'r', encoding='utf-8') as f:
         if (content):
             with open('saveimei.txt', 'a', encoding='utf-8') as f2:
                 f2.write(content)
-                json_str = json.loads(content)['data']
-                print('保存imei：{}，品牌：【{}】，{}，型号：{}'.format(json_str['imei'],json_str['brand'],json_str['name'],json_str['model']))
+                json_str = json.loads(content)
+                # try:
+                #     json_str = json.loads(content)['data']
+                #     print('保存imei：{}，品牌：【{}】，{}，型号：{}'.format(json_str['imei'],json_str['brand'],json_str['name'],json_str['model']))
+                # except Exception as e:
+                #     print('查询失败！')
                 # print(CalcImeiChecksum(imei))
+                if (json_str['code'] == 0):
+                    print(json_str['data']['imei'])
+                    print(json_str['data']['name'])
+                    print('保存imei：{}，品牌：【{}】，{}，型号：{}'.format(json_str['data']['imei'], json_str['data']['brand'],
+                                                              json_str['data']['name'], json_str['data']['model']))
+                else:
+                    print(json_str['message'])
+                # elif (json_str['code'] == 302303):
+                #     print(json_str['message'])
+                # elif (json_str['code'] == 302302):
+                #     print(json_str['message'])
                 f2.write('\n')
                 f2.close()
